@@ -3,7 +3,7 @@ import dlib
 
 # Load the pre-trained face detector and shape predictor
 face_detector = dlib.get_frontal_face_detector()
-eye_detector = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
+eye_detector = dlib.shape_predictor('src/shape_predictor_68_face_landmarks.dat')
 
 # Function for eye aspect ratio calculation
 def calculate_EAR(eye_landmarks):

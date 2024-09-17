@@ -4,7 +4,7 @@
 
 **Smart Fleet Management and Safety System (SFMS)** is an integrated platform designed to enhance the safety, efficiency, and comfort of buses and trucks. It incorporates several features like Advanced Driver Assistance Systems (ADAS), real-time fleet tracking, driver fatigue monitoring, passenger overcrowding detection, and road hazard mapping.
 
-The system is modular, supporting driver safety with collision detection, blind-spot monitoring, and adaptive cruise control (ACC). It also provides fleet managers with a centralized dashboard for monitoring vehicle status, location, and driver behavior, and it includes a mobile app for passengers to track seat availability and real-time updates.
+The system is modular, supporting driver safety with collision detection, blind-spot monitoring, and adaptive cruise control (ACC). It also provides fleet managers with a centralized dashboard for monitoring vehicle status, location, and driver behavior, and it includes a mobile app for passengers to track crowding and real-time updates.
 
 ---
 
@@ -34,6 +34,7 @@ The system is modular, supporting driver safety with collision detection, blind-
 
 ## System Architecture
 
+```
 SFMS_Project/
 ├── sensors/                                 # Contains modules for interacting with various sensors (LiDAR, Radar, Camera)
 ├── adas/                                    # Contains collision detection, adaptive cruise control logic
@@ -41,7 +42,7 @@ SFMS_Project/
 ├── fleet_management/                        # Contains GPS tracking and fleet analytics
 ├── passenger_management/                    # Contains seat availability, overcrowding detection
 ├── web_dashboard/                           # Frontend and backend code for the fleet management dashboard
-├── mobile_app/                              # Mobile app for passengers to track seat availability
 ├── requirements.txt                         # Python dependencies
 ├── README.md                                # Project overview and documentation
 └── main.py                                   # Main script to run the system integration
+```
