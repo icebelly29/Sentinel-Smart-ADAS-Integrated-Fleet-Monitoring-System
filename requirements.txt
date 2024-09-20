@@ -1,0 +1,6 @@
+Flask==2.3.2               # Flask for backend server
+gunicorn==20.1.0           # WSGI HTTP server for Flask in production
+requests==2.31.0           # To make HTTP requests
+opencv-python==4.8.0.76    # OpenCV for computer vision tasks
+dlib==19.22.1              # For face detection and driver monitoring
+numpy==1.23.5              # Required for numerical operations with OpenCV
