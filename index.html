@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Management Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .data-list {
+            list-style: none;
+            padding: 0;
+        }
+        .data-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .data-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fleet Management Dashboard</h1>
+
+        <!-- Driver Monitoring Section -->
+        <div class="section">
+            <h2>Driver Monitoring</h2>
+            <ul id="driverMonitoringList" class="data-list"></ul>
+        </div>
+
+        <!-- Collision Detection Section -->
+        <div class="section">
+            <h2>Collision Detection</h2>
+            <ul id="collisionDetectionList" class="data-list"></ul>
+        </div>
+
+        <!-- Fleet Management Section -->
+        <div class="section">
+            <h2>Fleet Management</h2>
+            <ul id="fleetList" class="data-list"></ul>
+        </div>
+
+        <!-- Passenger Management Section -->
+        <div class="section">
+            <h2>Passenger Management</h2>
+            <ul id="passengerManagementList" class="data-list"></ul>
+        </div>
+
+        <!-- Road Condition Mapping Section -->
+        <div class="section">
+            <h2>Road Condition Mapping</h2>
+            <ul id="roadConditionMappingList" class="data-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData(endpoint, elementId) {
+            try {
+                const response = await fetch(`http://localhost:5000${endpoint}`);
+                const data = await response.json();
+                const list = document.getElementById(elementId);
+                list.innerHTML = '';
+
+                if (Array.isArray(data)) {
+                    data.forEach((item) => {
+                        const li = document.createElement('li');
+                        li.textContent = typeof item === 'object' ? JSON.stringify(item) : String(item);
+                        list.appendChild(li);
+                    });
+                } else if (data && typeof data === 'object') {
+                    Object.entries(data).forEach(([key, value]) => {
+                        const li = document.createElement('li');
+                        li.textContent = `${key}: ${JSON.stringify(value)}`;
+                        list.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = String(data);
+                    list.appendChild(li);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function refreshAll() {
+            fetchData('/driver-monitoring', 'driverMonitoringList');
+            fetchData('/collision-detection', 'collisionDetectionList');
+            fetchData('/fleet', 'fleetList');
+            fetchData('/passenger-management', 'passengerManagementList');
+            fetchData('/road-condition', 'roadConditionMappingList');
+        }
+
+        refreshAll();
+        setInterval(refreshAll, 3000);
+    </script>
+</body>
+</html>

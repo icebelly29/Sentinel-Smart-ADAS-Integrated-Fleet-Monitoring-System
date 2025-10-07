@@ -43,7 +43,7 @@ Sentinel-Smart-ADAS-Integrated-Fleet-Monitoring-System
 ├── adaptive_cruise_control_lidar.py # Adaptive cruise control system
 ├── passenger_counting.py         # Passenger overcrowding detection
 ├── fleet_tracker_simulation.py   # Fleet tracking and simulation
-├── app.py                        # Flask API for fleet tracking
+├── backend.py                    # Flask API for fleet tracking
 ├── index.html                    # React or plain HTML dashboard (based on use case)
 ├── README.md                         # Project documentation
 ├── main.py                           # Script to run all the Python scripts simultaneously
@@ -96,7 +96,7 @@ Follow these steps to download it:
 
 1. **Run the Flask backend**:
     ```bash
-    python backend/app.py
+    python backend.py
     ```
 
 2. **Run the main system components simultaneously using the main script**:
@@ -104,8 +104,9 @@ Follow these steps to download it:
     python main.py
     ```
 
-3. **Access the web dashboard**:  
-    Open a browser and navigate to `http://127.0.0.1:5000` to view fleet and driver data.
+3. **Access the web dashboard**:
+    - Open `index.html` in your browser, or serve it with a simple static server.
+    - Ensure the backend is running at `http://127.0.0.1:5000`.
 
 ## Tech Stack
 - **Python**: Core language used for ADAS, driver monitoring, and passenger counting.

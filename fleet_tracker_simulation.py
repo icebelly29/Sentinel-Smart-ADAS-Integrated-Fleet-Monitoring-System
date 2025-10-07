@@ -2,7 +2,7 @@ import time
 import requests
 import random
 
-API_ENDPOINT = "https://httpbin.org/post"
+API_ENDPOINT = "http://127.0.0.1:5000/track"
 
 def simulate_movement(start_lat, start_lon, speed=0.01):
     """
@@ -24,7 +24,7 @@ def simulate_movement(start_lat, start_lon, speed=0.01):
 def send_location_to_server(lat, lon):
     data = {"latitude": lat, "longitude": lon, "vehicle_id": "TRUCK_01"}
     try:
-        response = requests.post(API_ENDPOINT, json=data)
+        response = requests.post(API_ENDPOINT, json=data, timeout=5)
         print(f"Sent GPS data to server: {response.status_code}")
         print(f"Latitude: {lat}, Longitude: {lon}")
         
