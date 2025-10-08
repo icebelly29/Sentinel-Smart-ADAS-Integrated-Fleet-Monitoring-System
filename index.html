@@ -76,6 +76,12 @@
             <h2>Road Condition Mapping</h2>
             <ul id="roadConditionMappingList" class="data-list"></ul>
         </div>
+
+        <!-- Adaptive Cruise Control Section -->
+        <div class="section">
+            <h2>Adaptive Cruise Control</h2>
+            <ul id="adaptiveCruiseList" class="data-list"></ul>
+        </div>
     </div>
 
     <script>
@@ -114,6 +120,7 @@
             fetchData('/fleet', 'fleetList');
             fetchData('/passenger-management', 'passengerManagementList');
             fetchData('/road-condition', 'roadConditionMappingList');
+            fetchData('/adaptive-cruise', 'adaptiveCruiseList');
         }
 
         refreshAll();

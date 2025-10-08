@@ -3,6 +3,7 @@
 import time
 import platform
 import random # Just for testing only on Windows
+import requests
 # Mock function for testing on Windows
 def read_lidar_distance():
     if platform.system() == 'Windows':
@@ -47,11 +48,23 @@ class AdaptiveCruiseControl:
 
 def monitor_distance_and_control_speed():
     acc = AdaptiveCruiseControl()
+    backend_url = "http://127.0.0.1:5000/adaptive-cruise"
+    vehicle_id = "TRUCK_01"
     
     while True:
         distance = read_lidar_distance()  # Measure distance with LiDAR or mock
         print(f"Distance: {distance} meters")
         acc.adjust_speed(distance)
+        try:
+            payload = {
+                "vehicle_id": vehicle_id,
+                "speed_kmh": acc.speed,
+                "distance_m": float(distance),
+                "timestamp": int(time.time())
+            }
+            requests.post(backend_url, json=payload, timeout=3)
+        except Exception:
+            pass
         time.sleep(1)
 
 if __name__ == "__main__":

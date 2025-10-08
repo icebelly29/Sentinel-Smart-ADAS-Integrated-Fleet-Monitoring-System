@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import requests
+import time
 
 # Paths to them YOLO files
 weights_path = "src/yolov3.weights"
@@ -68,6 +70,8 @@ def count_passengers(frame):
 
 def monitor_video_for_overcrowding(video_path):
     cap = cv2.VideoCapture(video_path)
+    backend_url = "http://127.0.0.1:5000/passenger-management"
+    vehicle_id = "TRUCK_01"
 
     if not cap.isOpened():
         print("Error: Could not open video file. Check codec support or file path.")
@@ -83,9 +87,21 @@ def monitor_video_for_overcrowding(video_path):
 
         passenger_count, frame_with_detections = count_passengers(frame)
 
-        if passenger_count > 7:  # Assuming 7 is the maximum capacity for the bus
+        overcrowded = passenger_count > 7  # Assuming 7 is the maximum capacity for the bus
+        if overcrowded:
             issue_overcrowding_alert()
-            print("Passenger count:", passenger_count) # Display the passenger count in the console for debugging
+        print("Passenger count:", passenger_count) # Display the passenger count in the console for debugging
+
+        try:
+            payload = {
+                "vehicle_id": vehicle_id,
+                "count": int(passenger_count),
+                "overcrowded": bool(overcrowded),
+                "timestamp": int(time.time())
+            }
+            requests.post(backend_url, json=payload, timeout=3)
+        except Exception:
+            pass
 
         # Display the frame with detections (bounding boxes)
         cv2.imshow('Bus Passenger Monitoring', frame_with_detections)

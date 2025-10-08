@@ -1,6 +1,7 @@
 import time
 import platform
 import random  # random module to simulate distances for
+import requests
 
 # Mock function for testing on Windows
 def read_lidar_distance():
@@ -29,12 +30,29 @@ def read_lidar_distance():
         distance = (dist_high << 8) + dist_low
         return distance
 
+BACKEND_URL = "http://127.0.0.1:5000/collision-detection"
+vehicle_id = "TRUCK_01"
+
+def post_collision(dist_cm, warning):
+    try:
+        payload = {
+            "vehicle_id": vehicle_id,
+            "distance_cm": int(dist_cm),
+            "warning": bool(warning),
+            "timestamp": int(time.time())
+        }
+        requests.post(BACKEND_URL, json=payload, timeout=3)
+    except Exception:
+        pass
+
 def collision_warning():
     dist = read_lidar_distance()
     print(f"Distance: {dist} cm")
-    if dist < 30:  # Threshold distance
+    warn = dist < 30
+    if warn:
         print("Warning: Object detected ahead!")
         issue_braking()
+    post_collision(dist, warn)
 
 def issue_braking():
     print("Automatic braking applied!")
